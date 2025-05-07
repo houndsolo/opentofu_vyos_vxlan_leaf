@@ -4,22 +4,6 @@ A sophisticated network automation project using OpenTofu 1.9 to deploy a VXLAN 
 
 ## 🌟 Features
 
-- **Modern Data Center Architecture**
-  - Spine-Leaf topology
-  - VXLAN overlay with BGP-EVPN control plane
-  - Multicast underlay for BUM traffic
-  - Anycast RP for multicast redundancy
-
-- **Hybrid Infrastructure**
-  - Physical Cisco Catalyst 9300 switches
-  - Virtual VyOS routers on Proxmox
-  - Automated provisioning and configuration
-
-- **Advanced Networking**
-  - Jumbo frame support (MTU 9169 outer, 9119 inner)
-  - OSPF underlay for optimal routing
-  - iBGP-EVPN overlay for VXLAN control plane
-  - Head-end replication for BUM traffic
 
 ## 🏗️ Architecture
 
@@ -30,23 +14,23 @@ A sophisticated network automation project using OpenTofu 1.9 to deploy a VXLAN 
 
 - **Leaf Layer**
   - 2 x Cisco Catalyst 9300 switches
-  - 6 x Virtual VyOS routers (on Proxmox)
+  - 7 x Virtual VyOS routers (on Proxmox)
   - Running VyOS 1.5-rolling-202402060022
 
 ### Network Design
 ```
+       +----------------+     +----------------+
+       |  Cisco Spine 1 |     |  Cisco Spine 2 |
+       +----------------+     +----------------+
+              |   \               /   |
+              |    \             /    |
+              |     \           /     |
+              |      \         /      |
+              |       \       /       |
+              |        \     /        |
+              |         \   /         |
 +----------------+     +----------------+
-|  Cisco Spine 1 |-----|  Cisco Spine 2 |
-+----------------+     +----------------+
-        |                     |
-        |                     |
-+----------------+     +----------------+
-|  Cisco Leaf 1  |     |  Cisco Leaf 2  |
-+----------------+     +----------------+
-        |                     |
-        |                     |
-+----------------+     +----------------+
-|  VyOS Leaf 1   |     |  VyOS Leaf 2   |
+|  Cisco Leaf n  |     |   VyOS Leaf n  |
 +----------------+     +----------------+
 ```
 
