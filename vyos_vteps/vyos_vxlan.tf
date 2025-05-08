@@ -1,4 +1,5 @@
 resource "vyos_interfaces_vxlan" "svd_vxlan_intf" {
+  depends_on = [vyos_protocols_bgp_neighbor.bgp_neighbors]
   identifier = { vxlan = "vxlan0" }
   source_interface = "dum0"
   mtu = var.vxlan_mtu

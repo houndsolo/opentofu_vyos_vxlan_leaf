@@ -22,7 +22,7 @@ resource "proxmox_virtual_environment_vm" "vyos_vxlan_vtep" {
   ]
 
   disk {
-    datastore_id = "ec_hdd_5_2_pool"
+    datastore_id = "ceph_rbd"
     #file_format  = "raw"
     interface    = "virtio0"
     iothread    = true
@@ -44,7 +44,7 @@ resource "proxmox_virtual_environment_vm" "vyos_vxlan_vtep" {
   initialization {
     interface = "scsi0"
     user_data_file_id = "vmbackups:snippets/vyos_api.yml"
-    datastore_id = "ec_hdd_5_2_pool"
+    datastore_id = "ceph_rbd"
     #dns {
     #  domain = "lylat.space"
     #  servers = [

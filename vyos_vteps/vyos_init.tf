@@ -1,17 +1,3 @@
-locals {
-  dum0_network = "10.240.254.${var.host_node.node_id}/32"
-  bgp_system_as = 700
-
-  link_to_spines = [
-  for spine_id in range(var.spines) : {
-    eth_id  = spine_id + 1
-    host_ip = "10.240.${var.host_node.node_id}${spine_id+1}.1/31"
-    peer_network = "10.240.${var.host_node.node_id}${spine_id+1}.0"
-    spine_rp_address = var.anycast_rp_address
-  }
-]
-}
-
 resource "vyos_system" "host_parameters" {
   #domain_name = "lylat.space"
   #domain_search = ["lylat.space"]

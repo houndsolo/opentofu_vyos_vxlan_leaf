@@ -1,4 +1,5 @@
 resource "vyos_protocols_bgp" "enable_bgp" {
+  depends_on = [vyos_protocols_pim_rp_address.set_rp]
   system_as = local.bgp_system_as
 }
 

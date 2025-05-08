@@ -7,7 +7,6 @@ module "create_vyos_vms" {
 }
 
 module "configure_vyos_vms" {
-  depends_on = [module.leaves_vms]
   for_each = { for leaf in var.leaves : leaf.node_id => leaf }
   source = "./vyos_vteps"
   providers = { vyos = vyos.leaves[each.key] }
