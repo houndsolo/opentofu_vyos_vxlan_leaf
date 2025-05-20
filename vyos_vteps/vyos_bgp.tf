@@ -8,16 +8,6 @@ resource "vyos_protocols_bgp_address_family_ipv4_unicast_maximum_paths" "bgp_mul
   ibgp = 2
 }
 
-#resource "vyos_protocols_bgp_address_family_ipv4_unicast_network" "bgp_advertise_dum0" {
-#  # would rather do ospf on interface[, but can only for ipv6??] -> redistribute into bgp
-#  depends_on = [vyos_protocols_bgp.enable_bgp]
-#  identifier = {
-#    network = local.dum0_network
-#  }
-#}
-
-
-
 resource "vyos_protocols_bgp_address_family_l2vpn_evpn" "l2vpn_evpn_config" {
   depends_on = [vyos_protocols_bgp.enable_bgp]
   advertise_all_vni = var.bgp_l2vpn_advertise_vni
@@ -31,7 +21,6 @@ resource "vyos_protocols_bgp_address_family_l2vpn_evpn_flooding" "l2vpn_evpn_flo
   head_end_replication = var.bgp_l2vpn_her
 }
 
-
 resource "vyos_protocols_bgp_peer_group" "peer_group_spine" {
   depends_on = [vyos_protocols_bgp.enable_bgp]
   identifier = {peer_group = "peer_group_spine"}
@@ -44,10 +33,6 @@ resource "vyos_protocols_bgp_peer_group" "peer_group_spine" {
     }
   }
 }
-
-#resource "vyos_protocols_bgp_address_family_l2vpn_evpn_advertise_ipv4_unicast" "l2vpn_advertise_ipv4" {
-#  route_map =
-#}
 
 resource "vyos_protocols_bgp_address_family_l2vpn_evpn_vni" "vni_6" {
   depends_on = [vyos_protocols_bgp_address_family_l2vpn_evpn.l2vpn_evpn_config]
