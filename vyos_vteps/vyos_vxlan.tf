@@ -1,5 +1,6 @@
 resource "vyos_interfaces_vxlan" "svd_vxlan_intf" {
-  depends_on = [vyos_protocols_bgp_neighbor.bgp_neighbors]
+  depends_on = [vyos_protocols_pim_rp_address.set_rp]
+  #depends_on = [vyos_protocols_bgp_neighbor.bgp_neighbors]
   identifier = { vxlan = "vxlan0" }
   source_interface = "dum0"
   group = var.rp_group_ip_only
@@ -22,6 +23,7 @@ resource "vyos_interfaces_vxlan" "svd_vxlan_intf" {
     nolearning = var.vxlan_nolearning
     vni_filter = var.vxlan_vni_filter
   }
+  vni = 9006
 }
 
 resource "vyos_interfaces_bridge" "vxlan_bridge" {
@@ -63,15 +65,15 @@ resource "vyos_interfaces_bridge_member_interface" "br0_eth3" {
 #  #mac = "0e:00:00:11:ff:06"
 #}
 
-resource "vyos_interfaces_vxlan_vlan_to_vni" "svd_vni_6_mapping" {
-  #  depends_on = [vyos_interfaces_bridge_vif.br0_vif_2006_anycast_gateway]
-  depends_on = [vyos_interfaces_bridge_member_interface.br0_eth3]
-  identifier = {
-    #which vlan on local leaf
-    vlan_to_vni = "6"
-    vxlan = "vxlan0"
-  }
-  #global vni
-  vni = 9006
-}
+#resource "vyos_interfaces_vxlan_vlan_to_vni" "svd_vni_6_mapping" {
+#  #  depends_on = [vyos_interfaces_bridge_vif.br0_vif_2006_anycast_gateway]
+#  depends_on = [vyos_interfaces_bridge_member_interface.br0_eth3]
+#  identifier = {
+#    #which vlan on local leaf
+#    vlan_to_vni = "6"
+#    vxlan = "vxlan0"
+#  }
+#  #global vni
+#  vni = 9006
+#}
 

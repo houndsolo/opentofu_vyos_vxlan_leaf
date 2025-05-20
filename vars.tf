@@ -1,14 +1,14 @@
 locals {
   vxlan_mtu = 9119
   disable_forwarding = false
-  disable_arp_filter = false
+  disable_arp_filter = true
   enable_arp_accept = false
   enable_arp_announce = false
   enable_directed_broadcast = true
   enable_proxy_arp = false
   proxy_arp_pvlan = false
 
-  vxlan_external = true
+  vxlan_external = false
   vxlan_neighbor_suppress = false
   vxlan_nolearning = true
   vxlan_vni_filter = false
