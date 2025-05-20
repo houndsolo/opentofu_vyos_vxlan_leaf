@@ -12,6 +12,8 @@ locals {
   ]
 }
 
+variable "rp_group_ip_only" {
+}
 variable "host_node" {
 }
 variable "vxlan_mtu" {

@@ -1,7 +1,7 @@
 locals {
   vxlan_mtu = 9119
   disable_forwarding = false
-  disable_arp_filter = true
+  disable_arp_filter = false
   enable_arp_accept = false
   enable_arp_announce = false
   enable_directed_broadcast = true
@@ -9,25 +9,29 @@ locals {
   proxy_arp_pvlan = false
 
   vxlan_external = true
-  vxlan_neighbor_suppress = true
+  vxlan_neighbor_suppress = false
   vxlan_nolearning = true
   vxlan_vni_filter = false
 
   bgp_l2vpn_flooding_disable = false
-  bgp_l2vpn_her = true
-  bgp_l2vpn_advertise_svi = true
+  bgp_l2vpn_her = false
+  bgp_l2vpn_advertise_svi = false
   bgp_l2vpn_advertise_vni = true
-  bgp_l2vpn_vni_advertise_svi = true
+  bgp_l2vpn_vni_advertise_svi = false
 }
 
 variable "anycast_rp_address" {
   type = string
-  default = "10.240.255.250"
+  default = "10.240.253.255"
 }
 
+variable "rp_group_ip_only" {
+  type = string
+  default = "225.0.0.69"
+}
 variable "rp_groups" {
   type = list(string)
-  default = ["227.0.0.0/8"]
+  default = ["225.0.0.69/32"]
 }
 
 

@@ -14,6 +14,7 @@ module "configure_vyos_vms" {
   leaves= var.leaves
   spines = var.spines
   rp_groups = var.rp_groups
+  rp_group_ip_only = var.rp_group_ip_only
   anycast_rp_address = var.anycast_rp_address
 
   bgp_l2vpn_her = local.bgp_l2vpn_her

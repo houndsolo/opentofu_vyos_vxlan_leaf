@@ -2,6 +2,7 @@ resource "vyos_interfaces_vxlan" "svd_vxlan_intf" {
   depends_on = [vyos_protocols_bgp_neighbor.bgp_neighbors]
   identifier = { vxlan = "vxlan0" }
   source_interface = "dum0"
+  group = var.rp_group_ip_only
   mtu = var.vxlan_mtu
   ip = {
     disable_arp_filter = var.disable_arp_filter
@@ -50,7 +51,7 @@ resource "vyos_interfaces_bridge_member_interface" "br0_eth3" {
 
 # no anycat gateway with flooding
 #resource "vyos_interfaces_bridge_vif" "br0_vif_9006_anycast_gateway" {
-#  depends_on = [vyos_interfaces_bridge_member_interface.br0_eth5]
+#  depends_on = [vyos_interfaces_bridge_member_interface.br0_eth3]
 #  identifier = {
 #    bridge = "br0"
 #    vif = 6
@@ -58,7 +59,8 @@ resource "vyos_interfaces_bridge_member_interface" "br0_eth3" {
 #  address = [
 #    "10.6.0.5/16"
 #  ]
-#  mac = "0e:00:00:00:ff:06"
+#  mac = "0e:00:00:${var.host_node.node_id}:ff:06"
+#  #mac = "0e:00:00:11:ff:06"
 #}
 
 resource "vyos_interfaces_vxlan_vlan_to_vni" "svd_vni_6_mapping" {

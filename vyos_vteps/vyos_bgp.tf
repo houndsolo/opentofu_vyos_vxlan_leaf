@@ -21,7 +21,7 @@ resource "vyos_protocols_bgp_address_family_ipv4_unicast_maximum_paths" "bgp_mul
 resource "vyos_protocols_bgp_address_family_l2vpn_evpn" "l2vpn_evpn_config" {
   depends_on = [vyos_protocols_bgp.enable_bgp]
   advertise_all_vni = var.bgp_l2vpn_advertise_vni
-  #advertise_svi_ip = var.bgp_l2vpn_advertise_svi
+  advertise_svi_ip = var.bgp_l2vpn_advertise_svi
   rt_auto_derive = false
 }
 
@@ -38,10 +38,6 @@ resource "vyos_protocols_bgp_peer_group" "peer_group_spine" {
   update_source = "dum0"
   remote_as = tostring(local.bgp_system_as)
   address_family = {
-    ipv4_unicast = {
-      soft_reconfiguration = {inbound = true}
-      nexthop_self = {}
-    }
     l2vpn_evpn = {
       soft_reconfiguration = {inbound = true}
       nexthop_self = {}
@@ -57,7 +53,7 @@ resource "vyos_protocols_bgp_address_family_l2vpn_evpn_vni" "vni_6" {
   depends_on = [vyos_protocols_bgp_address_family_l2vpn_evpn.l2vpn_evpn_config]
   identifier = { vni = 9006 }
   #advertise_default_gw = true
-  #advertise_svi_ip     = var.bgp_l2vpn_vni_advertise_svi
+  advertise_svi_ip     = var.bgp_l2vpn_vni_advertise_svi
 }
 
 

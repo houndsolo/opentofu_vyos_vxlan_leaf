@@ -84,8 +84,30 @@ resource "vyos_protocols_pim_interface" "pim_interface_enable" {
   identifier = { interface = "eth${tostring(each.value.eth_id)}" }
 }
 
-resource "vyos_protocols_pim_rp_address" "set_rp" {
+resource "vyos_protocols_pim_interface" "pim_dum0" {
   depends_on = [vyos_protocols_pim_interface.pim_interface_enable]
+  identifier = { interface = "dum0" }
+}
+
+resource "vyos_protocols_pim_interface_igmp_join" "link_to_spine_igmp" {
+  depends_on = [vyos_protocols_pim_interface.pim_dum0]
+  for_each = { for link in local.link_to_spines : tostring(link.eth_id) => link }
+  identifier = {
+    interface = "eth${tostring(each.value.eth_id)}"
+    join = "225.0.0.69"
+  }
+}
+resource "vyos_protocols_pim_interface_igmp_join" "dum0_igmp" {
+  depends_on = [vyos_protocols_pim_interface_igmp_join.link_to_spine_igmp]
+  for_each = { for link in local.link_to_spines : tostring(link.eth_id) => link }
+  identifier = {
+    interface = "dum0"
+    join = "225.0.0.69"
+  }
+}
+
+resource "vyos_protocols_pim_rp_address" "set_rp" {
+  depends_on = [vyos_protocols_pim_interface_igmp_join.dum0_igmp]
 
   identifier = { address = var.anycast_rp_address }
   group = var.rp_groups
