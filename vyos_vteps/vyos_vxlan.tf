@@ -2,7 +2,7 @@ resource "vyos_interfaces_vxlan" "svd_vxlan_intf" {
   depends_on = [vyos_protocols_bgp_neighbor.bgp_neighbors]
   identifier = { vxlan = "vxlan0" }
   source_interface = "dum0"
-  group = var.rp_group_ip_only
+  #group = var.rp_group_ip_only
   mtu = var.vxlan_mtu
   ip = {
     disable_arp_filter = var.disable_arp_filter

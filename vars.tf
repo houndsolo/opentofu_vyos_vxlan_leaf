@@ -8,13 +8,13 @@ locals {
   enable_proxy_arp = false
   proxy_arp_pvlan = false
 
-  vxlan_external = false
+  vxlan_external = true
   vxlan_neighbor_suppress = false
   vxlan_nolearning = true
   vxlan_vni_filter = false
 
   bgp_l2vpn_flooding_disable = false
-  bgp_l2vpn_her = false
+  bgp_l2vpn_her = true
   bgp_l2vpn_advertise_svi = false
   bgp_l2vpn_advertise_vni = true
   bgp_l2vpn_vni_advertise_svi = false
